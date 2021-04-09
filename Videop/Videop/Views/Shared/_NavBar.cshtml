@@ -1,0 +1,14 @@
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    @Html.ActionLink("Videop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">@Html.ActionLink("Customers", "Index", "Customers", new { area = "" }, new { @class = "nav-link" })</li>
+            <li class="nav-item">@Html.ActionLink("Movies", "Index", "Movies", new { area = "" }, new { @class = "nav-link" })</li>
+        </ul>
+        @Html.Partial("_LoginPartial")
+    </div>
+</nav>

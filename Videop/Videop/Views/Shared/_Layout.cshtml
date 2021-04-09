@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Videop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="container">
+        @Html.Partial("_NavBar")
+    </div>
+    <main>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+    </main>
+    <footer class="container">
+        <p>&copy; @DateTime.Now.Year - Videop</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*-- This allow us to add a sctpt section in our views and what we put there will render here in this page 
+        so in pages we need validation we can reference a jquery validation bundle so then we can add a
+        [@section scripts{@Scripts.Render("the bundel path")}] ref in those views (where there is a form for ex.)--*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

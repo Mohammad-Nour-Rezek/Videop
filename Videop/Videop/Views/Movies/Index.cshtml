@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Videop.Models.Movie>
+
+@{
+    ViewBag.Title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movies</h2>
+@if (!Model.Any())
+{
+    <p>There are no movies.</p>
+}
+else
+{
+    <a onclick="location.href='Movies/New'" class="btn btn-primary" style="margin:10px 10px">New Movie</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Movie</th>
+                <th scope="col">Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+            <tr>
+                <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
+                <td>@movie.Genre.GenreType</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,60 @@
+﻿@model Videop.ViewModels.CustomerFormViewModel
+
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+
+@*-- 1: we can use save for both new and edit, 2: or create another action called update and based on id set the target action dynamically --*@
+@using (Html.BeginForm("Save", "Customers"))
+{
+    @*-- Now this will show all validation messages, but it will show validation for Id, and it's a hidden field
+        so mvc dont know how to transfare empty string to int so add initialize (in viewModel variable) to the action that get the default values --*@
+    @*-- if you don't want to show the propsvalidation messages just make it true or if you want to show a specific message put a second parameter --*@
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        @*-- The Name is value for html lable element --*@
+        @*-- This field require validation cuz it's Requierd and Length is 255 --*@
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @*-- To make message red override [field-validation-error] class in Site.css --*@
+        @*-- To make input field red highlighted override [field-validation-error] class in Site.css --*@
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MembershipTypeId)
+        @Html.DropDownListFor(m => m.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MembershipTypeId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Birthdate)
+        @*-- Format string for date --*@
+        @Html.TextBoxFor(m => m.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Birthdate)
+    </div>
+
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.IsSubscribedToNewsletters) Subscribed To Newsletters
+        </label>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @*-- This method will create a token, it's like a secret code and then put it as a hidden field on this form and also as a cooky on user computer   --*@
+    @*-- if the value of the hidden fiel equal the value of the cookie then the server accept the request and if not it will stop the req. --*@
+    @*-- So to complete the validation must use [ValidateAntiForgeryToken] on the Action Save--*@
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@*-- This will show in _Layout for client side validation just for this view  --*@
+@*-- Now go to the page and press save button then you will see in dev. console network tap
+    there is no activity because jQuery validation is enabled --*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
